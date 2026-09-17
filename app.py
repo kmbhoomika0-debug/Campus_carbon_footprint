@@ -129,15 +129,15 @@ categories = {
     "Water": water_emissions
 }
 
-highest_category = max(categories, key=categories.get)
+highest_category = max(categories,key=categories.get)
 highest_value = categories[highest_category]
 
     # -------------------------------------
     # RESULTS PAGE
     # -------------------------------------
 
-    return render_template(
-        "results.html",
+return render_template(
+  "results.html",
 
         total_emissions=f"{total_emissions:.2f}",
 
