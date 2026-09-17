@@ -107,13 +107,30 @@ def calculate():
         + diesel_emissions
     )
 
-    total_emissions = (
-        energy_total
-        + transport_emissions
-        + waste_emissions
-        + water_emissions
-    )
+   # -------------------------------------
+# VISUAL ANALYSIS
+# -------------------------------------
 
+if total_emissions > 0:
+    energy_percentage = round((energy_total / total_emissions) * 100, 1)
+    transport_percentage = round((transport_emissions / total_emissions) * 100, 1)
+    waste_percentage = round((waste_emissions / total_emissions) * 100, 1)
+    water_percentage = round((water_emissions / total_emissions) * 100, 1)
+else:
+    energy_percentage = 0
+    transport_percentage = 0
+    waste_percentage = 0
+    water_percentage = 0
+
+categories = {
+    "Energy": energy_total,
+    "Transportation": transport_emissions,
+    "Waste": waste_emissions,
+    "Water": water_emissions
+}
+
+highest_category = max(categories, key=categories.get)
+highest_value = categories[highest_category]
 
     # -------------------------------------
     # RESULTS PAGE
