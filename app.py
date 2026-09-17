@@ -98,7 +98,7 @@ def calculate():
 
 
     # -------------------------------------
-    # TOTALS
+    # ENERGY TOTAL
     # -------------------------------------
 
     energy_total = (
@@ -107,37 +107,78 @@ def calculate():
         + diesel_emissions
     )
 
-   # -------------------------------------
-# VISUAL ANALYSIS
-# -------------------------------------
 
-if total_emissions > 0:
-    energy_percentage = round((energy_total / total_emissions) * 100, 1)
-    transport_percentage = round((transport_emissions / total_emissions) * 100, 1)
-    waste_percentage = round((waste_emissions / total_emissions) * 100, 1)
-    water_percentage = round((water_emissions / total_emissions) * 100, 1)
-else:
-    energy_percentage = 0
-    transport_percentage = 0
-    waste_percentage = 0
-    water_percentage = 0
+    # -------------------------------------
+    # TOTAL CAMPUS EMISSIONS
+    # -------------------------------------
 
-categories = {
-    "Energy": energy_total,
-    "Transportation": transport_emissions,
-    "Waste": waste_emissions,
-    "Water": water_emissions
-}
+    total_emissions = (
+        energy_total
+        + transport_emissions
+        + waste_emissions
+        + water_emissions
+    )
 
-highest_category = max(categories,key=categories.get)
-highest_value = categories[highest_category]
+
+    # -------------------------------------
+    # VISUAL ANALYSIS
+    # -------------------------------------
+
+    if total_emissions > 0:
+
+        energy_percentage = round(
+            (energy_total / total_emissions) * 100,
+            1
+        )
+
+        transport_percentage = round(
+            (transport_emissions / total_emissions) * 100,
+            1
+        )
+
+        waste_percentage = round(
+            (waste_emissions / total_emissions) * 100,
+            1
+        )
+
+        water_percentage = round(
+            (water_emissions / total_emissions) * 100,
+            1
+        )
+
+    else:
+
+        energy_percentage = 0
+        transport_percentage = 0
+        waste_percentage = 0
+        water_percentage = 0
+
+
+    # -------------------------------------
+    # FIND HIGHEST EMISSION CATEGORY
+    # -------------------------------------
+
+    categories = {
+        "Energy": energy_total,
+        "Transportation": transport_emissions,
+        "Waste": waste_emissions,
+        "Water": water_emissions
+    }
+
+    highest_category = max(
+        categories,
+        key=categories.get
+    )
+
+    highest_value = categories[highest_category]
+
 
     # -------------------------------------
     # RESULTS PAGE
     # -------------------------------------
 
-return render_template(
-  "results.html",
+    return render_template(
+        "results.html",
 
         total_emissions=f"{total_emissions:.2f}",
 
@@ -154,12 +195,18 @@ return render_template(
         water_emissions=f"{water_emissions:.2f}",
 
         energy_total=f"{energy_total:.2f}",
-energy_percentage=energy_percentage,
-transport_percentage=transport_percentage,
-waste_percentage=waste_percentage,
-water_percentage=water_percentage,
-highest_category=highest_category,
-highest_value=f"{highest_value:.2f}"
+
+        energy_percentage=energy_percentage,
+
+        transport_percentage=transport_percentage,
+
+        waste_percentage=waste_percentage,
+
+        water_percentage=water_percentage,
+
+        highest_category=highest_category,
+
+        highest_value=f"{highest_value:.2f}"
     )
 
 
@@ -278,7 +325,6 @@ Give a short, clear and useful answer.
             "prompt": prompt,
             "stream": False,
 
-            # Faster and shorter responses
             "options": {
                 "num_predict": 100,
                 "temperature": 0.3
