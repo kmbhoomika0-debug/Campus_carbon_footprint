@@ -153,7 +153,13 @@ highest_value = categories[highest_category]
 
         water_emissions=f"{water_emissions:.2f}",
 
-        energy_total=f"{energy_total:.2f}"
+        energy_total=f"{energy_total:.2f}",
+energy_percentage=energy_percentage,
+transport_percentage=transport_percentage,
+waste_percentage=waste_percentage,
+water_percentage=water_percentage,
+highest_category=highest_category,
+highest_value=f"{highest_value:.2f}"
     )
 
 
