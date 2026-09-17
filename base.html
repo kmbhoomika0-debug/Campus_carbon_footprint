@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>{% block title %}Campus Carbon Footprint{% endblock %}</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap"
+          rel="stylesheet">
+</head>
+
+<body>
+
+    {% block content %}
+    {% endblock %}
+
+
+    <!-- ========================= -->
+    <!-- CAMPUSCARBON AI -->
+    <!-- ========================= -->
+
+    <button class="ai-button" onclick="toggleAI()">
+        ✦
+        <span>CampusCarbon AI</span>
+    </button>
+
+
+    <div class="ai-panel" id="aiPanel">
+
+        <div class="ai-header">
+            <div>
+                <div class="ai-title">CampusCarbon AI</div>
+
+                <div class="ai-subtitle">
+                    Your campus sustainability assistant
+                </div>
+            </div>
+
+            <button class="ai-close" onclick="toggleAI()">×</button>
+        </div>
+
+
+        <!-- AI MESSAGES -->
+
+        <div class="ai-messages">
+
+            <div class="ai-message">
+                Hi! 🌱 I'm CampusCarbon AI.
+                <br><br>
+                I can help you understand your campus carbon footprint,
+                explain the calculator and suggest ways to reduce emissions.
+            </div>
+
+        </div>
+
+
+        <!-- QUICK QUESTIONS -->
+
+        <div class="ai-quick-actions">
+
+            <button onclick="aiQuestion('What is a campus carbon footprint?')">
+                What is carbon footprint?
+            </button>
+
+            <button onclick="aiQuestion('How do I use the calculator?')">
+                How do I use this?
+            </button>
+
+            <button onclick="aiQuestion('How can my campus reduce emissions?')">
+                How can we reduce it?
+            </button>
+
+        </div>
+
+
+        <!-- AI INPUT -->
+
+        <div class="ai-input-area">
+
+            <input
+                type="text"
+                id="aiInput"
+                placeholder="Ask CampusCarbon AI..."
+                onkeydown="if(event.key === 'Enter') sendAI()"
+            >
+
+            <button onclick="sendAI()">↑</button>
+
+        </div>
+
+    </div>
+
+
+    <!-- ========================= -->
+    <!-- JAVASCRIPT -->
+    <!-- ========================= -->
+
+    <script>
+
+        // Open / close AI panel
+        function toggleAI() {
+
+            const panel = document.getElementById("aiPanel");
+
+            panel.classList.toggle("active");
+
+        }
+
+
+        // Quick question buttons
+        function aiQuestion(question) {
+
+            document.getElementById("aiInput").value = question;
+
+            sendAI();
+
+        }
+
+
+        // Send question to Flask + OpenAI
+        async function sendAI() {
+
+            const input = document.getElementById("aiInput");
+
+            const question = input.value.trim();
+
+            if (!question) return;
+
+
+            const messages =
+                document.querySelector(".ai-messages");
+
+
+            // -------------------------
+            // Show user's message
+            // -------------------------
+
+            const userMessage =
+                document.createElement("div");
+
+            userMessage.className = "user-message";
+
+            userMessage.innerText = question;
+
+            messages.appendChild(userMessage);
+
+
+            // Clear input
+            input.value = "";
+
+
+            // -------------------------
+            // Temporary AI message
+            // -------------------------
+
+            const aiMessage =
+                document.createElement("div");
+
+            aiMessage.className = "ai-message";
+
+            aiMessage.innerText =
+                "Thinking... 🌱";
+
+            messages.appendChild(aiMessage);
+
+
+            messages.scrollTop =
+                messages.scrollHeight;
+
+
+            // -------------------------
+            // Send to Flask
+            // -------------------------
+
+            try {
+
+                const response = await fetch("/ask-ai", {
+
+                    method: "POST",
+
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+
+                    body: JSON.stringify({
+                        question: question
+                    })
+
+                });
+
+
+                // Get Flask response
+                const data = await response.json();
+
+
+                // Show AI answer
+                if (data.answer) {
+
+                    aiMessage.innerText = data.answer;
+
+                } else {
+
+                    aiMessage.innerText =
+                        "I couldn't generate an answer right now. Please try again. 🌱";
+
+                }
+
+
+            } catch (error) {
+
+                console.error("CampusCarbon AI Error:", error);
+
+                aiMessage.innerText =
+                    "Sorry, I couldn't connect to CampusCarbon AI right now. 🌱";
+
+            }
+
+
+            // Scroll to latest message
+            messages.scrollTop =
+                messages.scrollHeight;
+
+        }
+
+    </script>
+
+</body>
+</html>

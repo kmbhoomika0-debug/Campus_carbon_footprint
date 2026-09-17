@@ -1,0 +1,531 @@
+{% extends "base.html" %}
+
+{% block title %}
+Your Results | CampusCarbon
+{% endblock %}
+
+{% block content %}
+
+<header class="container">
+    <nav class="navbar">
+
+        <div class="logo">
+            Campus<span>Carbon</span>
+        </div>
+
+        <ul class="nav-links">
+            <li>
+                <a href="/">Home</a>
+            </li>
+
+            <li>
+                <a href="/calculator">Recalculate</a>
+            </li>
+        </ul>
+
+    </nav>
+</header>
+
+
+<main class="container results-page">
+
+    <div class="tag">
+        YOUR CAMPUS RESULTS
+    </div>
+
+    <h1>
+        Your campus<br>
+        <span>footprint.</span>
+    </h1>
+
+    <p class="results-intro">
+        Based on the activity data you entered, here is
+        your estimated campus carbon footprint.
+    </p>
+
+
+    <!-- TOTAL RESULT -->
+
+    <section class="total-result">
+
+        <div>
+
+            <p class="result-label">
+                TOTAL CARBON FOOTPRINT
+            </p>
+
+            <div class="total-number">
+                {{ total_emissions }}
+            </div>
+
+            <div class="unit">
+                kg CO₂e
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- CARBON ANALYSIS -->
+
+    <section class="breakdown">
+
+        <div class="breakdown-title">
+            <span>01</span>
+
+            <h2>
+                Carbon analysis
+            </h2>
+        </div>
+
+        <p class="results-intro">
+            Your total footprint is distributed across
+            four major campus activity categories.
+        </p>
+
+
+        <div class="emission-card">
+
+            <div>
+                <h3>⚡ Energy</h3>
+
+                <p>
+                    Electricity, petrol and diesel emissions
+                </p>
+            </div>
+
+            <strong>
+                {{ energy_total }} kg CO₂e
+            </strong>
+
+        </div>
+
+
+        <div class="emission-card">
+
+            <div>
+                <h3>🚍 Transportation</h3>
+
+                <p>
+                    Campus buses and other vehicle travel
+                </p>
+            </div>
+
+            <strong>
+                {{ transport_emissions }} kg CO₂e
+            </strong>
+
+        </div>
+
+
+        <div class="emission-card">
+
+            <div>
+                <h3>♻️ Waste</h3>
+
+                <p>
+                    General and recycled waste
+                </p>
+            </div>
+
+            <strong>
+                {{ waste_emissions }} kg CO₂e
+            </strong>
+
+        </div>
+
+
+        <div class="emission-card">
+
+            <div>
+                <h3>💧 Water</h3>
+
+                <p>
+                    Water consumption related emissions
+                </p>
+            </div>
+
+            <strong>
+                {{ water_emissions }} kg CO₂e
+            </strong>
+
+        </div>
+
+    </section>
+
+
+    <!-- VISUAL ANALYSIS -->
+
+    <section class="breakdown">
+
+        <div class="breakdown-title">
+            <span>02</span>
+
+            <h2>
+                Visual analysis
+            </h2>
+        </div>
+
+        <p class="results-intro">
+            The bars show the contribution of each category
+            to the total campus carbon footprint.
+        </p>
+
+
+        <!-- ENERGY -->
+
+        <div class="chart-row">
+
+            <div class="chart-label">
+                <span>⚡ Energy</span>
+
+                <strong>
+                    {{ energy_percentage }}%
+                </strong>
+            </div>
+
+            <div class="chart-track">
+
+                <div
+                    class="chart-bar"
+                    style="width: {{ energy_percentage }}%;">
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- TRANSPORTATION -->
+
+        <div class="chart-row">
+
+            <div class="chart-label">
+                <span>🚍 Transportation</span>
+
+                <strong>
+                    {{ transport_percentage }}%
+                </strong>
+            </div>
+
+            <div class="chart-track">
+
+                <div
+                    class="chart-bar"
+                    style="width: {{ transport_percentage }}%;">
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- WASTE -->
+
+        <div class="chart-row">
+
+            <div class="chart-label">
+                <span>♻️ Waste</span>
+
+                <strong>
+                    {{ waste_percentage }}%
+                </strong>
+            </div>
+
+            <div class="chart-track">
+
+                <div
+                    class="chart-bar"
+                    style="width: {{ waste_percentage }}%;">
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- WATER -->
+
+        <div class="chart-row">
+
+            <div class="chart-label">
+                <span>💧 Water</span>
+
+                <strong>
+                    {{ water_percentage }}%
+                </strong>
+            </div>
+
+            <div class="chart-track">
+
+                <div
+                    class="chart-bar"
+                    style="width: {{ water_percentage }}%;">
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- HIGHEST SOURCE -->
+
+        <div class="emission-card highest-source">
+
+            <div>
+
+                <h3>
+                    🏆 Highest emission source
+                </h3>
+
+                <p>
+                    {{ highest_category }} contributes
+                    the largest share of your campus
+                    carbon footprint.
+                </p>
+
+            </div>
+
+            <strong>
+                {{ highest_value }} kg CO₂e
+            </strong>
+
+        </div>
+
+    </section>
+
+
+    <!-- CONTRIBUTION ANALYSIS -->
+
+    <section class="breakdown">
+
+        <div class="breakdown-title">
+            <span>03</span>
+
+            <h2>
+                Contribution analysis
+            </h2>
+        </div>
+
+        <p class="results-intro">
+            Percentage contribution of each campus activity.
+        </p>
+
+
+        <div class="emission-card">
+
+            <div>
+                <h3>⚡ Energy</h3>
+
+                <p>
+                    Share of total emissions
+                </p>
+            </div>
+
+            <strong>
+                {{ energy_percentage }}%
+            </strong>
+
+        </div>
+
+
+        <div class="emission-card">
+
+            <div>
+                <h3>🚍 Transportation</h3>
+
+                <p>
+                    Share of total emissions
+                </p>
+            </div>
+
+            <strong>
+                {{ transport_percentage }}%
+            </strong>
+
+        </div>
+
+
+        <div class="emission-card">
+
+            <div>
+                <h3>♻️ Waste</h3>
+
+                <p>
+                    Share of total emissions
+                </p>
+            </div>
+
+            <strong>
+                {{ waste_percentage }}%
+            </strong>
+
+        </div>
+
+
+        <div class="emission-card">
+
+            <div>
+                <h3>💧 Water</h3>
+
+                <p>
+                    Share of total emissions
+                </p>
+            </div>
+
+            <strong>
+                {{ water_percentage }}%
+            </strong>
+
+        </div>
+
+    </section>
+
+
+    <!-- ENERGY DETAILS -->
+
+    <section class="breakdown">
+
+        <div class="breakdown-title">
+            <span>04</span>
+
+            <h2>
+                Energy breakdown
+            </h2>
+        </div>
+
+
+        <div class="emission-card">
+
+            <div>
+                <h3>Electricity</h3>
+
+                <p>
+                    Grid electricity consumption
+                </p>
+            </div>
+
+            <strong>
+                {{ electricity_emissions }} kg CO₂e
+            </strong>
+
+        </div>
+
+
+        <div class="emission-card">
+
+            <div>
+                <h3>Petrol</h3>
+
+                <p>
+                    Petrol consumption
+                </p>
+            </div>
+
+            <strong>
+                {{ petrol_emissions }} kg CO₂e
+            </strong>
+
+        </div>
+
+
+        <div class="emission-card">
+
+            <div>
+                <h3>Diesel</h3>
+
+                <p>
+                    Diesel consumption
+                </p>
+            </div>
+
+            <strong>
+                {{ diesel_emissions }} kg CO₂e
+            </strong>
+
+        </div>
+
+    </section>
+
+
+    <!-- INTERPRETATION -->
+
+    <section class="breakdown">
+
+        <div class="breakdown-title">
+            <span>05</span>
+
+            <h2>
+                What this means
+            </h2>
+
+        </div>
+
+
+        <div class="emission-card">
+
+            <div>
+
+                <h3>
+                    Your calculated footprint
+                </h3>
+
+                <p>
+                    CampusCarbon converted your campus
+                    activity data into an estimated
+                    carbon footprint using the configured
+                    emission factors.
+                </p>
+
+            </div>
+
+            <strong>
+                {{ total_emissions }} kg CO₂e
+            </strong>
+
+        </div>
+
+
+        <div class="emission-card">
+
+            <div>
+
+                <h3>
+                    Next step
+                </h3>
+
+                <p>
+                    Focus first on the category with the
+                    highest contribution to identify the
+                    biggest opportunity for emission reduction.
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ACTIONS -->
+
+    <section class="result-actions">
+
+        <a
+            href="/calculator"
+            class="primary-btn">
+            Calculate again →
+        </a>
+
+        <a
+            href="/"
+            class="secondary-btn">
+            Back to home
+        </a>
+
+    </section>
+
+</main>
+
+{% endblock %}

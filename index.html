@@ -1,0 +1,110 @@
+{% extends "base.html" %}
+
+{% block title %}
+Campus Carbon | Carbon Footprint Calculator
+{% endblock %}
+
+{% block content %}
+
+<!-- Navigation -->
+<header class="container">
+    <nav class="navbar">
+
+        <div class="logo">
+            Campus<span>Carbon</span>
+        </div>
+
+        <ul class="nav-links">
+            <li><a href="/">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#calculator">Calculator</a></li>
+        </ul>
+
+    </nav>
+</header>
+
+
+<!-- Hero Section -->
+<main>
+
+    <section class="hero container">
+
+        <div class="hero-content">
+
+            <div class="tag">
+                CAMPUS SUSTAINABILITY
+            </div>
+
+            <h1>
+                Every campus<br>
+                leaves a <span>footprint.</span>
+            </h1>
+
+            <p>
+                Measure your college campus's carbon footprint
+                through energy, transportation, waste and water
+                consumption.
+            </p>
+
+            <a href="{{ url_for('calculator') }}" class="primary-btn">
+                Calculate your footprint →
+            </a>
+
+
+            <div class="hero-note">
+
+                <div>
+                    <strong>01</strong>
+                    <small>Enter campus data</small>
+                </div>
+
+                <div>
+                    <strong>02</strong>
+                    <small>Calculate CO₂e</small>
+                </div>
+
+                <div>
+                    <strong>03</strong>
+                    <small>Understand your impact</small>
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- About Section -->
+    <section id="about" class="container">
+
+        <h2>Why measure a campus footprint?</h2>
+
+        <p>
+            A college campus uses electricity, fuel, water and
+            other resources every day. CampusCarbon converts
+            these activities into a measurable carbon footprint.
+        </p>
+
+    </section>
+
+
+    <!-- Calculator Section -->
+    <section id="calculator" class="container">
+
+        <h2>Ready to measure?</h2>
+
+        <p>
+            Enter your campus information and calculate its
+            carbon emissions.
+        </p>
+
+        <a href="{{ url_for('calculator') }}" class="primary-btn">
+            Start calculation →
+        </a>
+
+    </section>
+
+</main>
+
+{% endblock %}

@@ -1,0 +1,526 @@
+{% extends "base.html" %}
+
+{% block title %}
+Calculate | CampusCarbon
+{% endblock %}
+
+{% block content %}
+
+
+<!-- Navigation -->
+<header class="container">
+    <nav class="navbar">
+
+        <div class="logo">
+            Campus<span>Carbon</span>
+        </div>
+
+        <ul class="nav-links">
+            <li>
+                <a href="/">Home</a>
+            </li>
+        </ul>
+
+    </nav>
+</header>
+
+
+<!-- Main Calculator -->
+<main class="container">
+
+
+    <!-- Calculator Header -->
+
+    <section class="calculator-header">
+
+        <div class="tag">
+            CAMPUS CARBON CALCULATOR
+        </div>
+
+        <h1>
+            Measure your<br>
+            campus <span>footprint.</span>
+        </h1>
+
+        <p>
+            Enter your campus activity data below.
+            We will convert it into carbon dioxide equivalent
+            (CO₂e) emissions.
+        </p>
+
+    </section>
+
+
+    <!-- ============================= -->
+    <!-- CALCULATOR FORM -->
+    <!-- ============================= -->
+
+    <form
+        class="calculator-form"
+        method="POST"
+        action="{{ url_for('calculate') }}">
+
+
+        <!-- ============================= -->
+        <!-- 01 CAMPUS INFORMATION -->
+        <!-- ============================= -->
+
+        <section class="form-section">
+
+            <div class="section-number">
+                01
+            </div>
+
+            <div class="section-content">
+
+                <h2>
+                    Campus information
+                </h2>
+
+                <p class="section-description">
+                    Tell us about the campus and the period
+                    you are measuring.
+                </p>
+
+
+                <div class="form-grid">
+
+
+                    <!-- Campus Name -->
+
+                    <div class="form-group">
+
+                        <label for="campus_name">
+                            Campus name
+                        </label>
+
+                        <input
+                            type="text"
+                            id="campus_name"
+                            name="campus_name"
+                            placeholder="e.g. ABC Engineering College"
+                            required>
+
+                    </div>
+
+
+                    <!-- Students -->
+
+                    <div class="form-group">
+
+                        <label for="students">
+                            Number of students
+                        </label>
+
+                        <input
+                            type="number"
+                            id="students"
+                            name="students"
+                            placeholder="e.g. 2500"
+                            min="0"
+                            required>
+
+                    </div>
+
+
+                    <!-- Staff -->
+
+                    <div class="form-group">
+
+                        <label for="staff">
+                            Number of staff
+                        </label>
+
+                        <input
+                            type="number"
+                            id="staff"
+                            name="staff"
+                            placeholder="e.g. 250"
+                            min="0">
+
+                    </div>
+
+
+                    <!-- Period -->
+
+                    <div class="form-group">
+
+                        <label for="period">
+                            Calculation period
+                        </label>
+
+                        <select
+                            id="period"
+                            name="period">
+
+                            <option value="year">
+                                One year
+                            </option>
+
+                            <option value="month">
+                                One month
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- ============================= -->
+        <!-- 02 ENERGY -->
+        <!-- ============================= -->
+
+        <section class="form-section">
+
+            <div class="section-number">
+                02
+            </div>
+
+            <div class="section-content">
+
+                <h2>
+                    Energy
+                </h2>
+
+                <p class="section-description">
+                    Record the electricity and fuel used
+                    by your campus.
+                </p>
+
+
+                <div class="form-grid">
+
+
+                    <!-- Grid Electricity -->
+
+                    <div class="form-group">
+
+                        <label for="electricity">
+                            Grid electricity
+                            <span>kWh</span>
+                        </label>
+
+                        <input
+                            type="number"
+                            id="electricity"
+                            name="electricity"
+                            placeholder="e.g. 100000"
+                            min="0"
+                            step="0.01">
+
+                    </div>
+
+
+                    <!-- Solar -->
+
+                    <div class="form-group">
+
+                        <label for="solar">
+                            Solar electricity
+                            <span>kWh</span>
+                        </label>
+
+                        <input
+                            type="number"
+                            id="solar"
+                            name="solar"
+                            placeholder="e.g. 20000"
+                            min="0"
+                            step="0.01">
+
+                    </div>
+
+
+                    <!-- Petrol -->
+
+                    <div class="form-group">
+
+                        <label for="petrol">
+                            Petrol
+                            <span>litres</span>
+                        </label>
+
+                        <input
+                            type="number"
+                            id="petrol"
+                            name="petrol"
+                            placeholder="e.g. 1500"
+                            min="0"
+                            step="0.01">
+
+                    </div>
+
+
+                    <!-- Diesel -->
+
+                    <div class="form-group">
+
+                        <label for="diesel">
+                            Diesel
+                            <span>litres</span>
+                        </label>
+
+                        <input
+                            type="number"
+                            id="diesel"
+                            name="diesel"
+                            placeholder="e.g. 3000"
+                            min="0"
+                            step="0.01">
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- ============================= -->
+        <!-- 03 TRANSPORTATION -->
+        <!-- ============================= -->
+
+        <section class="form-section">
+
+            <div class="section-number">
+                03
+            </div>
+
+            <div class="section-content">
+
+                <h2>
+                    Transportation
+                </h2>
+
+                <p class="section-description">
+                    Add the distance travelled by campus
+                    transportation.
+                </p>
+
+
+                <div class="form-grid">
+
+
+                    <!-- Bus -->
+
+                    <div class="form-group">
+
+                        <label for="bus_km">
+                            Campus bus distance
+                            <span>km/year</span>
+                        </label>
+
+                        <input
+                            type="number"
+                            id="bus_km"
+                            name="bus_km"
+                            placeholder="e.g. 50000"
+                            min="0"
+                            step="0.01">
+
+                    </div>
+
+
+                    <!-- Other Vehicles -->
+
+                    <div class="form-group">
+
+                        <label for="vehicle_km">
+                            Other campus vehicles
+                            <span>km/year</span>
+                        </label>
+
+                        <input
+                            type="number"
+                            id="vehicle_km"
+                            name="vehicle_km"
+                            placeholder="e.g. 15000"
+                            min="0"
+                            step="0.01">
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- ============================= -->
+        <!-- 04 WASTE -->
+        <!-- ============================= -->
+
+        <section class="form-section">
+
+            <div class="section-number">
+                04
+            </div>
+
+            <div class="section-content">
+
+                <h2>
+                    Waste
+                </h2>
+
+                <p class="section-description">
+                    Tell us how much waste your campus
+                    generates and recycles.
+                </p>
+
+
+                <div class="form-grid">
+
+
+                    <!-- General Waste -->
+
+                    <div class="form-group">
+
+                        <label for="general_waste">
+                            General waste
+                            <span>kg/year</span>
+                        </label>
+
+                        <input
+                            type="number"
+                            id="general_waste"
+                            name="general_waste"
+                            placeholder="e.g. 12000"
+                            min="0"
+                            step="0.01">
+
+                    </div>
+
+
+                    <!-- Recycled Waste -->
+
+                    <div class="form-group">
+
+                        <label for="recycled_waste">
+                            Recycled waste
+                            <span>kg/year</span>
+                        </label>
+
+                        <input
+                            type="number"
+                            id="recycled_waste"
+                            name="recycled_waste"
+                            placeholder="e.g. 5000"
+                            min="0"
+                            step="0.01">
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- ============================= -->
+        <!-- 05 WATER -->
+        <!-- ============================= -->
+
+        <section class="form-section">
+
+            <div class="section-number">
+                05
+            </div>
+
+            <div class="section-content">
+
+                <h2>
+                    Water
+                </h2>
+
+                <p class="section-description">
+                    Enter the amount of water consumed
+                    by your campus.
+                </p>
+
+
+                <div class="form-grid">
+
+
+                    <!-- Water -->
+
+                    <div class="form-group">
+
+                        <label for="water">
+                            Water consumption
+                            <span>litres/year</span>
+                        </label>
+
+                        <input
+                            type="number"
+                            id="water"
+                            name="water"
+                            placeholder="e.g. 5000000"
+                            min="0"
+                            step="0.01">
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- ============================= -->
+        <!-- CALCULATE BUTTON -->
+        <!-- ============================= -->
+
+        <section class="calculate-section">
+
+            <div>
+
+                <h2>
+                    Ready to calculate?
+                </h2>
+
+                <p>
+                    Your activity data will be converted
+                    into total CO₂e emissions.
+                </p>
+
+            </div>
+
+
+            <button
+                type="submit"
+                class="primary-btn">
+
+                Calculate footprint →
+
+            </button>
+
+        </section>
+
+
+    </form>
+
+
+</main>
+
+
+{% endblock %}
